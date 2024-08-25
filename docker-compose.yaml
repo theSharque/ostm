@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    networks:
+      - ostm
+    ports:
+      - "1908:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ostm
+      - MONGO_INITDB_ROOT_PASSWORD=ostmPass
+
+networks:
+  ostm:
+    driver: bridge

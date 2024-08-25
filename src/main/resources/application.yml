@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ostm
+  data:
+    mongodb:
+      authentication-database: admin
+      username: ostm
+      password: ostmPass
+      host: localhost
+      port: 1908
+      database: ostm
+      auto-index-creation: true
+
+logging:
+  level:
+    root: INFO
+    global:
+      ostm:
+        backend: DEBUG
