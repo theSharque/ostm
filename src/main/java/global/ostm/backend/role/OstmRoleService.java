@@ -24,7 +24,7 @@ public class OstmRoleService extends OstmService<OstmRole> {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmUser>> checkUser(OstmUser ostmUser) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> checkUser(OstmUser ostmUser) {
         if (ostmUser.getRoles() == null || ostmUser.getRoles().isEmpty()) {
             return Mono.empty();
         } else {

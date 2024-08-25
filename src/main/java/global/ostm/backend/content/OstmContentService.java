@@ -1,9 +1,6 @@
 package global.ostm.backend.content;
 
-import global.ostm.backend.core.CryptUtils;
-import global.ostm.backend.core.OstmBus;
-import global.ostm.backend.core.OstmCheck;
-import global.ostm.backend.core.OstmService;
+import global.ostm.backend.core.*;
 import global.ostm.backend.doc.OstmDoc;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -33,7 +30,7 @@ public class OstmContentService extends OstmService<OstmContent> {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> saveDoc(OstmDoc ostmDoc) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> saveDoc(OstmDoc ostmDoc) {
         return ostmDoc.getContent() == null ? Mono.empty()
                 : Flux.fromIterable(ostmDoc.getContent().values())
                         .filter(ostmModel -> ostmModel instanceof OstmContent)

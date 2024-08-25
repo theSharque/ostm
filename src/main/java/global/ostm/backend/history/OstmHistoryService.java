@@ -82,37 +82,37 @@ public class OstmHistoryService {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmProject>> createProject(OstmProject ostmProject) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createProject(OstmProject ostmProject) {
         return saveCreateHistory(ostmProject);
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmUser>> createUser(OstmUser ostmUser) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createUser(OstmUser ostmUser) {
         return saveCreateHistory(ostmUser);
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmRole>> createRole(OstmRole ostmRole) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createRole(OstmRole ostmRole) {
         return saveCreateHistory(ostmRole);
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDocType>> createDocType(OstmDocType ostmDocType) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createDocType(OstmDocType ostmDocType) {
         return saveCreateHistory(ostmDocType);
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDocFlow>> createDocFlow(OstmDocFlow ostmDocFlow) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createDocFlow(OstmDocFlow ostmDocFlow) {
         return saveCreateHistory(ostmDocFlow);
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> createDoc(OstmDoc ostmDoc) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createDoc(OstmDoc ostmDoc) {
         OstmDoc toSave = ostmDoc.clone();
         toSave.setContent(null);
         return saveCreateHistory(toSave);
@@ -120,7 +120,7 @@ public class OstmHistoryService {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmField>> createDocFlow(OstmField ostmField) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> createDocFlow(OstmField ostmField) {
         return saveCreateHistory(ostmField);
     }
 
@@ -138,49 +138,49 @@ public class OstmHistoryService {
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmProject>> updateProject(OstmProject ostmProject) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateProject(OstmProject ostmProject) {
         return ostmProjectRepository.findById(ostmProject.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmProject));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmUser>> updateUser(OstmUser ostmUser) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateUser(OstmUser ostmUser) {
         return ostmUserRepository.findById(ostmUser.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmUser));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmRole>> updateRole(OstmRole ostmUser) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateRole(OstmRole ostmUser) {
         return ostmRoleRepository.findById(ostmUser.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmUser));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDocType>> updateDocType(OstmDocType ostmDocType) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateDocType(OstmDocType ostmDocType) {
         return ostmDocTypeRepository.findById(ostmDocType.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmDocType));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDocFlow>> updateDocFlow(OstmDocFlow ostmDocFlow) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateDocFlow(OstmDocFlow ostmDocFlow) {
         return ostmDocFlowRepository.findById(ostmDocFlow.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmDocFlow));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmField>> updateField(OstmField ostmField) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateField(OstmField ostmField) {
         return ostmFieldRepository.findById(ostmField.getId())
                 .flatMap(oldOstmProject -> saveUpdateHistory(oldOstmProject, ostmField));
     }
 
     @SuppressWarnings("unused")
     @OstmCheck({UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> updateDoc(OstmDoc ostmDoc) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateDoc(OstmDoc ostmDoc) {
         OstmDoc toSave = ostmDoc.clone();
         toSave.setContent(null);
 
@@ -190,9 +190,10 @@ public class OstmHistoryService {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmContent>> updateContent(OstmContent ostmContent) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> updateContent(OstmContent ostmContent) {
         return ostmContentRepository.findById(ostmContent.getId())
                 .flatMap(oldContent -> saveUpdateHistory(oldContent, ostmContent))
-                .switchIfEmpty(Mono.defer(() -> saveCreateHistory(ostmContent)));
+                .switchIfEmpty(Mono.defer(() -> saveCreateHistory(ostmContent)))
+                .then(Mono.empty());
     }
 }

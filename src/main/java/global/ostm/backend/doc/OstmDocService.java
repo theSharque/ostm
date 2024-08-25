@@ -1,6 +1,10 @@
 package global.ostm.backend.doc;
 
 import global.ostm.backend.core.*;
+import global.ostm.backend.doctype.OstmDocTypeRepository;
+import global.ostm.backend.flow.OstmDocFlowRepository;
+import global.ostm.backend.flow.OstmDocFlowStep;
+import global.ostm.backend.flow.OstmStepImpossible;
 import global.ostm.backend.project.OstmProjectRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,13 +19,18 @@ public class OstmDocService extends OstmService<OstmDoc> {
 
     private final OstmDocRepository docRepository;
     private final OstmProjectRepository ostmProjectRepository;
+    private final OstmDocTypeRepository ostmDocTypeRepository;
+    private final OstmDocFlowRepository ostmDocFlowRepository;
 
     protected OstmDocService(OstmBus ostmBus, OstmDocRepository docRepository,
-            OstmProjectRepository ostmProjectRepository) {
+            OstmProjectRepository ostmProjectRepository, OstmDocTypeRepository ostmDocTypeRepository,
+            OstmDocFlowRepository ostmDocFlowRepository) {
         super(ostmBus, docRepository);
 
         this.docRepository = docRepository;
         this.ostmProjectRepository = ostmProjectRepository;
+        this.ostmDocTypeRepository = ostmDocTypeRepository;
+        this.ostmDocFlowRepository = ostmDocFlowRepository;
     }
 
     public Flux<OstmDoc> getDoc() {
@@ -75,6 +84,23 @@ public class OstmDocService extends OstmService<OstmDoc> {
                             toSave.setContent(null);
                             return docRepository.save(toSave).then(Mono.just(savedDoc));
                         }) : Mono.error(new OstmObjectNotFound(ostmDoc.getClass().getSimpleName(), id))
+                );
+    }
+
+    public Mono<OstmDoc> changeStep(String id, String step) {
+        return docRepository.findById(id)
+                .flatMap(ostmDoc -> ostmDocTypeRepository.findById(ostmDoc.getDocType())
+                        .flatMap(ostmDocType -> ostmDocFlowRepository.findById(ostmDocType.getFlow())
+                                .flatMap(ostmDocFlow -> {
+                                    OstmDocFlowStep currentStep = ostmDocFlow.getSteps().get(ostmDoc.getStepId());
+                                    if (currentStep.getNext().contains(step)) {
+                                        ostmDoc.setStepId(step);
+                                        return super.update(id, ostmDoc);
+                                    } else {
+                                        return Mono.error(new OstmStepImpossible());
+                                    }
+                                })
+                        )
                 );
     }
 }

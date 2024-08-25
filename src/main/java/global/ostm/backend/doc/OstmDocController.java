@@ -36,4 +36,9 @@ public class OstmDocController {
     public Mono<OstmDoc> updateDoc(@PathVariable String id, @RequestBody OstmDoc ostmDoc) {
         return ostmDocService.updateDoc(id, ostmDoc);
     }
+
+    @GetMapping("/{id}/{step}")
+    public Mono<OstmDoc> getDocById(@PathVariable String id, @PathVariable String step) {
+        return ostmDocService.changeStep(id, step);
+    }
 }

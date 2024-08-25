@@ -1,9 +1,6 @@
 package global.ostm.backend.doctype;
 
-import global.ostm.backend.core.OstmBus;
-import global.ostm.backend.core.OstmCheck;
-import global.ostm.backend.core.OstmFieldIsIncorrect;
-import global.ostm.backend.core.OstmService;
+import global.ostm.backend.core.*;
 import global.ostm.backend.doc.OstmDoc;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -24,7 +21,7 @@ public class OstmDocTypeService extends OstmService<OstmDocType> {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> checkDoc(OstmDoc ostmDoc) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> checkDoc(OstmDoc ostmDoc) {
         return ostmRepository.existsById(ostmDoc.getDocType())
                 .flatMap(exists -> exists
                         ? Mono.empty()

@@ -25,7 +25,7 @@ public class OstmProjectService extends OstmService<OstmProject> {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> checkDoc(OstmDoc ostmProject) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> checkDoc(OstmDoc ostmProject) {
         return ostmRepository.existsById(ostmProject.getProjectKey())
                 .flatMap(exists -> exists
                         ? Mono.empty()

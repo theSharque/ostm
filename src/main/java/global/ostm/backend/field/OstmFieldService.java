@@ -73,7 +73,7 @@ public class OstmFieldService extends OstmService<OstmField> {
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
-    public Mono<AbstractMap.SimpleEntry<String, OstmDoc>> checkDoc(OstmDoc ostmDoc) {
+    public Mono<AbstractMap.SimpleEntry<String, OstmModel>> checkDoc(OstmDoc ostmDoc) {
         return ostmDoc.getContent() == null ? Mono.empty()
                 : ostmFieldRepository.findAllById(ostmDoc.getContent().keySet())
                         .count()

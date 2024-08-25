@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document(collection = "doc")
 @EqualsAndHashCode(callSuper = true)
-public class OstmDoc extends OstmModel implements Cloneable{
+public class OstmDoc extends OstmModel implements Cloneable {
 
     @TextIndexed
     private String title;
@@ -20,7 +20,7 @@ public class OstmDoc extends OstmModel implements Cloneable{
     private String projectKey;
     @Indexed
     private String docType;
-    private Integer stepId;
+    private String stepId;
 
     @Override
     public OstmDoc clone() {
