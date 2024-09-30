@@ -50,7 +50,25 @@ public class OstmProjectService extends OstmService<OstmProject> {
         return super.create(ostmProject);
     }
 
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+public class OstmProjectService {
+    private final WebClient webClient;
+
+    public OstmProjectService(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
     public Mono<OstmProject> updateProject(String key, OstmProject ostmProject) {
+        return webClient.put()
+                .uri("/projects/{key}", key)
+                .bodyValue(ostmProject)
+                .retrieve()
+                .bodyToMono(OstmProject.class)
+                .onErrorResume(e -> Mono.error(new RuntimeException("Failed to update project", e)));
+    }
+}
         return super.update(key, ostmProject);
     }
 }
