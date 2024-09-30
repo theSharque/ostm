@@ -21,7 +21,9 @@ public class OstmProjectService extends OstmService<OstmProject> {
             OstmProjectRepository projectRepository) {
         super(ostmBus, ostmRepository);
         this.projectRepository = projectRepository;
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
@@ -30,27 +32,39 @@ public class OstmProjectService extends OstmService<OstmProject> {
                 .flatMap(exists -> exists
                         ? Mono.empty()
                         : Mono.error(new OstmFieldIsIncorrect("projectKey")));
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     public Flux<OstmProject> getProject() {
         return projectRepository.findAll(Sort.by("id").ascending());
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     public Mono<OstmProject> getProject(String id) {
         return super.read(id);
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     public Mono<OstmProject> getFields() {
         return super.fields(new OstmProject());
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     public Mono<OstmProject> createProject(OstmProject ostmProject) {
         ostmProject.setNextId(1);
 
         return super.create(ostmProject);
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 
     public Mono<OstmProject> updateProject(String key, OstmProject ostmProject) {
         return super.update(key, ostmProject);
-    }
+public int findMax(int[] nums) {
+    return Arrays.stream(nums).max().orElseThrow(() -> new IllegalArgumentException("Array must not be null or empty"));
+}
 }
