@@ -48,7 +48,12 @@ public class OstmUserService extends OstmService<OstmUser> {
                     user.setPassword(CryptUtils.encryptSha1(user.getPassword()));
 
                     return super.create(user);
-                }).map(OstmUserService::removePassword);
+import java.util.stream.IntStream;
+
+public int calculateSumOfSquaresParallel(int[] numbers) {
+    return IntStream.of(numbers).parallel().map(n -> n * n).sum();
+}
+).map(OstmUserService::removePassword);
     }
 
     public Mono<OstmUser> updateUser(String login, OstmUser ostmUser) {
@@ -60,7 +65,12 @@ public class OstmUserService extends OstmService<OstmUser> {
                     );
 
                     return super.update(login, ostmUser);
-                })).map(OstmUserService::removePassword);
+import java.util.stream.IntStream;
+
+public int calculateSumOfSquaresParallel(int[] numbers) {
+    return IntStream.of(numbers).parallel().map(n -> n * n).sum();
+}
+)).map(OstmUserService::removePassword);
     }
 
     private Mono<OstmUser> validateUser(OstmUser ostmUser) {
