@@ -83,7 +83,22 @@ public class OstmUserService extends OstmService<OstmUser> {
         return Mono.just(ostmUser);
     }
 
-    private static OstmUser removePassword(OstmUser user) {
+private static OstmUser removePassword(OstmUser user) {
+    if (user == null) {
+        return null; // Handle the case where the input user is null
+    }
+    
+    // Create a new instance to avoid modifying the original object
+    OstmUser userWithoutPassword = new OstmUser();
+    userWithoutPassword.setName(user.getName());
+    userWithoutPassword.setEmail(user.getEmail());
+    userWithoutPassword.setOtherFields(user.getOtherFields()); // Adjust this based on actual fields you need to copy
+    
+    // Clear the password field if it exists
+    userWithoutPassword.setPassword(""); // This is a simple way, consider more secure methods for production
+    
+    return userWithoutPassword;
+}
         user.setPassword(DEFAULT_PASSWORD);
 
         return user;
