@@ -48,7 +48,13 @@ public class OstmUserService extends OstmService<OstmUser> {
                     user.setPassword(CryptUtils.encryptSha1(user.getPassword()));
 
                     return super.create(user);
-                }).map(OstmUserService::removePassword);
+import java.util.stream.IntStream;
+
+public void processData(int[] data) {
+    int sum = IntStream.of(data).parallel().sum(); // Parallel processing can be more efficient for large arrays
+    System.out.println("Sum: " + sum);
+}
+).map(OstmUserService::removePassword);
     }
 
     public Mono<OstmUser> updateUser(String login, OstmUser ostmUser) {
@@ -60,7 +66,13 @@ public class OstmUserService extends OstmService<OstmUser> {
                     );
 
                     return super.update(login, ostmUser);
-                })).map(OstmUserService::removePassword);
+import java.util.stream.IntStream;
+
+public void processData(int[] data) {
+    int sum = IntStream.of(data).parallel().sum(); // Parallel processing can be more efficient for large arrays
+    System.out.println("Sum: " + sum);
+}
+)).map(OstmUserService::removePassword);
     }
 
     private Mono<OstmUser> validateUser(OstmUser ostmUser) {
