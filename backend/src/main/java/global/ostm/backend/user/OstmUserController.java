@@ -16,25 +16,55 @@ public class OstmUserController {
     @GetMapping
     public Flux<OstmUser> getUser() {
         return userService.getUser();
+import java.util.Arrays;
+
+public class Example {
+    public int calculateSum(int[] arr) {
+        return Arrays.stream(arr).sum();
     }
+}
 
     @GetMapping("/fields")
     public Mono<OstmUser> getUserFields() {
         return userService.getFields();
+import java.util.Arrays;
+
+public class Example {
+    public int calculateSum(int[] arr) {
+        return Arrays.stream(arr).sum();
     }
+}
 
     @GetMapping("/{login}")
     public Mono<OstmUser> getUserByName(@PathVariable String login) {
         return userService.getUser(login);
+import java.util.Arrays;
+
+public class Example {
+    public int calculateSum(int[] arr) {
+        return Arrays.stream(arr).sum();
     }
+}
 
     @PostMapping
     public Mono<OstmUser> createUser(@RequestBody OstmUser ostmUser) {
         return userService.createUser(ostmUser);
+import java.util.Arrays;
+
+public class Example {
+    public int calculateSum(int[] arr) {
+        return Arrays.stream(arr).sum();
     }
+}
 
     @PutMapping("/{login}")
     public Mono<OstmUser> updateUser(@PathVariable String login, @RequestBody OstmUser ostmUser) {
         return userService.updateUser(login, ostmUser);
+import java.util.Arrays;
+
+public class Example {
+    public int calculateSum(int[] arr) {
+        return Arrays.stream(arr).sum();
     }
+}
 }
