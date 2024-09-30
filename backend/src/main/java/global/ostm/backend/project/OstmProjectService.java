@@ -21,8 +21,13 @@ public class OstmProjectService extends OstmService<OstmProject> {
             OstmProjectRepository projectRepository) {
         super(ostmBus, ostmRepository);
         this.projectRepository = projectRepository;
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     @SuppressWarnings("unused")
     @OstmCheck({CREATE, UPDATE})
     public Mono<AbstractMap.SimpleEntry<String, OstmModel>> checkDoc(OstmDoc ostmProject) {
@@ -30,27 +35,57 @@ public class OstmProjectService extends OstmService<OstmProject> {
                 .flatMap(exists -> exists
                         ? Mono.empty()
                         : Mono.error(new OstmFieldIsIncorrect("projectKey")));
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     public Flux<OstmProject> getProject() {
         return projectRepository.findAll(Sort.by("id").ascending());
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     public Mono<OstmProject> getProject(String id) {
         return super.read(id);
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     public Mono<OstmProject> getFields() {
         return super.fields(new OstmProject());
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     public Mono<OstmProject> createProject(OstmProject ostmProject) {
         ostmProject.setNextId(1);
 
         return super.create(ostmProject);
-    }
-
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
+    
     public Mono<OstmProject> updateProject(String key, OstmProject ostmProject) {
         return super.update(key, ostmProject);
+    // Example using Hibernate or JDBC
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    List results = session.createQuery("from MyEntity").list();
+    tx.commit();
+    session.close();
     }
-}
