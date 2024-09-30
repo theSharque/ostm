@@ -66,19 +66,67 @@ public class OstmUserService extends OstmService<OstmUser> {
     private Mono<OstmUser> validateUser(OstmUser ostmUser) {
         if (ostmUser.getEmail() == null || ostmUser.getEmail().trim().isEmpty()) {
             return Mono.error(new OstmFieldIsIncorrect("email"));
-        }
+public void benchmark() {
+    List<Integer> input = generateLargeList(100000); // Generate a large list for testing
+
+    long startTime = System.nanoTime();
+    processList(input);
+    long endTime = System.nanoTime();
+    System.out.println("Time taken by naive method: " + (endTime - startTime) + " ns");
+
+    startTime = System.nanoTime();
+    optimizedProcessList(input);
+    endTime = System.nanoTime();
+    System.out.println("Time taken by optimized method: " + (endTime - startTime) + " ns");
+}
 
         if (ostmUser.getFirstName() == null || ostmUser.getFirstName().trim().isEmpty()) {
             return Mono.error(new OstmFieldIsIncorrect("firstName"));
-        }
+public void benchmark() {
+    List<Integer> input = generateLargeList(100000); // Generate a large list for testing
+
+    long startTime = System.nanoTime();
+    processList(input);
+    long endTime = System.nanoTime();
+    System.out.println("Time taken by naive method: " + (endTime - startTime) + " ns");
+
+    startTime = System.nanoTime();
+    optimizedProcessList(input);
+    endTime = System.nanoTime();
+    System.out.println("Time taken by optimized method: " + (endTime - startTime) + " ns");
+}
 
         if (ostmUser.getLastName() == null || ostmUser.getLastName().trim().isEmpty()) {
             return Mono.error(new OstmFieldIsIncorrect("lastName"));
-        }
+public void benchmark() {
+    List<Integer> input = generateLargeList(100000); // Generate a large list for testing
+
+    long startTime = System.nanoTime();
+    processList(input);
+    long endTime = System.nanoTime();
+    System.out.println("Time taken by naive method: " + (endTime - startTime) + " ns");
+
+    startTime = System.nanoTime();
+    optimizedProcessList(input);
+    endTime = System.nanoTime();
+    System.out.println("Time taken by optimized method: " + (endTime - startTime) + " ns");
+}
 
         if (ostmUser.getPassword() == null || ostmUser.getPassword().trim().isEmpty()) {
             return Mono.error(new OstmFieldIsIncorrect("password"));
-        }
+public void benchmark() {
+    List<Integer> input = generateLargeList(100000); // Generate a large list for testing
+
+    long startTime = System.nanoTime();
+    processList(input);
+    long endTime = System.nanoTime();
+    System.out.println("Time taken by naive method: " + (endTime - startTime) + " ns");
+
+    startTime = System.nanoTime();
+    optimizedProcessList(input);
+    endTime = System.nanoTime();
+    System.out.println("Time taken by optimized method: " + (endTime - startTime) + " ns");
+}
 
         return Mono.just(ostmUser);
     }
